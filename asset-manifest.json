@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/css-ministry-roster/static/css/main.ed90514d.css",
-    "main.js": "/css-ministry-roster/static/js/main.e01eab7c.js",
+    "main.js": "/css-ministry-roster/static/js/main.d6f46a23.js",
     "index.html": "/css-ministry-roster/index.html",
     "main.ed90514d.css.map": "/css-ministry-roster/static/css/main.ed90514d.css.map",
-    "main.e01eab7c.js.map": "/css-ministry-roster/static/js/main.e01eab7c.js.map"
+    "main.d6f46a23.js.map": "/css-ministry-roster/static/js/main.d6f46a23.js.map"
   },
   "entrypoints": [
     "static/css/main.ed90514d.css",
-    "static/js/main.e01eab7c.js"
+    "static/js/main.d6f46a23.js"
   ]
 }
