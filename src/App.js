@@ -66,9 +66,20 @@ function App() {
 
   const autoAssign = () => {
     const assignmentsOut = [];
-    // track how many slots each person has gotten
+
+    // 1) Track how many slots each person has gotten total
     const personTotals = {};
-    people.forEach(p => { personTotals[p.id] = 0; });
+    // 2) Track how many times each person has done each *base* role
+    const baseTotals = {};
+
+    people.forEach(p => {
+      personTotals[p.id] = 0;
+      ROLES.forEach(r => {
+        // strip off trailing digits, e.g. "AV 1" -> "AV"
+        const base = r.replace(/\s*\d+$/, '');
+        baseTotals[`${p.id}|${base}`] = 0;
+      });
+    });
 
     weeks.forEach((w, wIdx) => {
       if (w.voided) return;
@@ -77,33 +88,50 @@ function App() {
       const avail = people.filter(p =>
         !unavailable.some(u => u.personId === p.id && u.weekId === w.id)
       );
-      if (avail.length === 0) return;
+      if (!avail.length) return;
 
-      // sort by least-assigned so far (greedy balance)
+      // 3) Greedy balance: pick the least-busy people first
       avail.sort((a, b) => personTotals[a.id] - personTotals[b.id]);
 
-      // rotate roles by week index to vary order
+      // 4) Rotate the role order each week to vary which suffix (1 vs 2) shows up
       const rot = wIdx % ROLES.length;
       const rolesRotated = [
         ...ROLES.slice(rot),
         ...ROLES.slice(0, rot)
       ];
 
-      // assign one role to each person, up to rolesRotated.length
-      avail.forEach((p, i) => {
-        if (i >= rolesRotated.length) return;
-        const chosenRole = rolesRotated[i];
+      // 5) For each person, choose the role in rolesRotated that
+      //    minimizes (personTotals + baseTotals for that person & baseRole)
+      avail.forEach(p => {
+        if (!rolesRotated.length) return;
+
+        let bestIdx = 0, bestCost = Infinity;
+        rolesRotated.forEach((role, i) => {
+          const base = role.replace(/\s*\d+$/, '');
+          const cost = personTotals[p.id] + baseTotals[`${p.id}|${base}`];
+          if (cost < bestCost) {
+            bestCost = cost;
+            bestIdx = i;
+          }
+        });
+
+        const [chosenRole] = rolesRotated.splice(bestIdx, 1);
         assignmentsOut.push({
           personId: p.id,
           weekId:   w.id,
           role:     chosenRole
         });
+
+        // bump both totals
         personTotals[p.id] += 1;
+        const chosenBase = chosenRole.replace(/\s*\d+$/, '');
+        baseTotals[`${p.id}|${chosenBase}`] += 1;
       });
     });
 
     setAssignments(assignmentsOut);
   };
+
 
 
 
