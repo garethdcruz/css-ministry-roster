@@ -113,7 +113,7 @@ function App() {
     }}>
       <h1>CSS Ministry Roster</h1>
       <p style={{ margin:4 }}>
-        <em>Peter 5:2 "to be shepherds of the flock that God gave you and to take care of it willingly, as God wants you to, and not unwillingly.</em>
+        <em>1 Peter 5:2 "I appeal to you to be shepherds of the flock that God gave you and to take care of it willingly, as God wants you to, and not unwillingly.</em>
       </p>
       <p style={{ margin:'0 0 16px' }}>
         <em>Do your work, not for mere pay, but from a real desire to serve."</em>
