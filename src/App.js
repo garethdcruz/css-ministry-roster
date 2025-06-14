@@ -65,27 +65,47 @@ function App() {
   };
 
   const autoAssign = () => {
-    const result = [];
-    weeks.forEach(w => {
+    const assignmentsOut = [];
+    // track how many slots each person has gotten
+    const personTotals = {};
+    people.forEach(p => { personTotals[p.id] = 0; });
+
+    weeks.forEach((w, wIdx) => {
       if (w.voided) return;
+
+      // who’s available this week?
       const avail = people.filter(p =>
-        !unavailable.some(u => u.personId===p.id && u.weekId===w.id)
+        !unavailable.some(u => u.personId === p.id && u.weekId === w.id)
       );
-      if (!avail.length) return;
-      const rolesLeft = [...ROLES];
-      avail.sort(() => Math.random() - 0.5);
-      avail.forEach(p => {
-        if (!rolesLeft.length) return;
-        const i = Math.floor(Math.random() * rolesLeft.length);
-        result.push({
+      if (avail.length === 0) return;
+
+      // sort by least-assigned so far (greedy balance)
+      avail.sort((a, b) => personTotals[a.id] - personTotals[b.id]);
+
+      // rotate roles by week index to vary order
+      const rot = wIdx % ROLES.length;
+      const rolesRotated = [
+        ...ROLES.slice(rot),
+        ...ROLES.slice(0, rot)
+      ];
+
+      // assign one role to each person, up to rolesRotated.length
+      avail.forEach((p, i) => {
+        if (i >= rolesRotated.length) return;
+        const chosenRole = rolesRotated[i];
+        assignmentsOut.push({
           personId: p.id,
           weekId:   w.id,
-          role:     rolesLeft.splice(i,1)[0]
+          role:     chosenRole
         });
+        personTotals[p.id] += 1;
       });
     });
-    setAssignments(result);
+
+    setAssignments(assignmentsOut);
   };
+
+
 
   // CSV Building
   const csvHeaders = [
