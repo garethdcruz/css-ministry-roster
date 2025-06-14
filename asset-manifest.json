@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/CSS-Ministry-Roster/static/css/main.ed90514d.css",
+    "main.js": "/CSS-Ministry-Roster/static/js/main.bfd30075.js",
+    "index.html": "/CSS-Ministry-Roster/index.html",
+    "main.ed90514d.css.map": "/CSS-Ministry-Roster/static/css/main.ed90514d.css.map",
+    "main.bfd30075.js.map": "/CSS-Ministry-Roster/static/js/main.bfd30075.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed90514d.css",
+    "static/js/main.bfd30075.js"
+  ]
+}
