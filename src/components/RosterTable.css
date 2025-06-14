@@ -1,0 +1,24 @@
+.person-cell {
+  position: relative;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background: none;
+  color: #e74c3c;
+  font-size: 1.2em;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.person-cell:hover .delete-btn {
+  opacity: 1;
+}

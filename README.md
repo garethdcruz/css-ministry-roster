@@ -1,2 +1,7 @@
-# CSS-Ministry-Roster
-Roster Application hosted on github, will help us to streamline our efforts in assigning roles &amp; members in sheets
+## CSS Ministry Roster
+A simple React app to assign people → weeks → roles, with CSV export.
+
+### Local dev
+```bash
+npm install
+npm start
